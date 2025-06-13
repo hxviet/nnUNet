@@ -26,6 +26,8 @@ standard deviation. The normalization that is applied is the same for each train
 The values used by nnU-Net for normalization are stored in the `foreground_intensity_properties_per_channel` entry in the 
 corresponding plans file. This normalization is suitable for modalities presenting physical quantities such as CT 
 images and ADC maps.
+- `ct_to_lower_upper` where `lower` and `upper` are integers (Check `nnunetv2/preprocessing/normalization/map_channel_name_to_normalization.py:channel_name_to_normalization_mapping` to see actual normalization schemes currently available): Use a custom CT window for normalization. This works similarly to `CT` normalization but instead of clipping to the 0.5 and 99.5 percentiles, it clips to the  range [lower, upper]. For example, `ct_to_-1000_1000` will clip values to [-1000, 1000] before applying mean/std normalization. This is useful for specific CT windows (e.g., bone window, lung window, etc.) or when you need consistent intensity ranges.
+
 - `noNorm` : do not perform any normalization at all
 - `rescale_to_0_1`: rescale the intensities to [0, 1]
 - `rgb_to_0_1`: assumes uint8 inputs. Divides by 255 to rescale uint8 to [0, 1]
